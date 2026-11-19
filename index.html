@@ -3,274 +3,498 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Portfolio — Selected Works</title>
-  <!-- React 18 & Babel CDN (Zero build tools needed) -->
-<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-
+  <title>Kristoff — Web Developer Portfolio</title>
   <style>
+    :root {
+      --bg: #09090b;
+      --surface: rgba(24, 24, 27, 0.72);
+      --surface-hover: rgba(39, 39, 42, 0.85);
+      --border: rgba(255, 255, 255, 0.08);
+      --border-hover: rgba(99, 102, 241, 0.45);
+      --text: #fafafa;
+      --text-muted: #a1a1aa;
+      --accent: #818cf8;
+      --accent-glow: rgba(99, 102, 241, 0.22);
+    }
+
     * { box-sizing: border-box; }
+
     body {
       margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background: #fafafa;
-      color: #111827;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      background-image:
+        radial-gradient(circle at 15% 10%, rgba(99, 102, 241, 0.14), transparent 38%),
+        radial-gradient(circle at 85% 25%, rgba(16, 185, 129, 0.08), transparent 35%);
+      color: var(--text);
       line-height: 1.6;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
     }
+
     .container {
-      max-width: 960px;
+      max-width: 1040px;
       margin: 0 auto;
-      padding: 64px 24px;
+      padding: 72px 24px 48px;
     }
+
     header {
-      margin-bottom: 40px;
+      margin-bottom: 52px;
     }
-    .badge {
-      display: inline-block;
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
       font-size: 12px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: #2563eb;
-      background: #eff6ff;
-      padding: 4px 10px;
+      font-weight: 500;
+      color: #e4e4e7;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      padding: 6px 14px;
       border-radius: 999px;
-      margin-bottom: 12px;
+      margin-bottom: 20px;
+      backdrop-filter: blur(8px);
     }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 10px #10b981;
+    }
+
     h1 {
-      font-size: 36px;
-      margin: 0 0 10px;
-      letter-spacing: -0.02em;
+      font-size: clamp(36px, 5vw, 52px);
+      font-weight: 700;
+      margin: 0 0 14px;
+      letter-spacing: -0.03em;
+      background: linear-gradient(135deg, #ffffff 35%, #a1a1aa 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
+
     .subtitle {
       font-size: 17px;
-      color: #4b5563;
-      max-width: 620px;
+      color: var(--text-muted);
+      max-width: 640px;
+      margin: 0 0 28px;
+    }
+
+    .subtitle strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .btn-primary, .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .btn-primary {
+      background: #fafafa;
+      color: #09090b;
+    }
+
+    .btn-primary:hover {
+      background: #e4e4e7;
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: var(--surface);
+      color: var(--text);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(10px);
+    }
+
+    .btn-secondary:hover {
+      border-color: rgba(255, 255, 255, 0.22);
+      background: var(--surface-hover);
+    }
+
+    input[type="radio"] {
+      display: none;
+    }
+
+    .section-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .section-title {
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
       margin: 0;
     }
+
     .filters {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
-      margin-bottom: 28px;
     }
-    .filter-btn {
-      border: 1px solid #e5e7eb;
-      background: #fff;
-      color: #374151;
-      padding: 8px 16px;
+
+    .filter-label {
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-muted);
+      padding: 7px 14px;
       border-radius: 999px;
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 500;
       cursor: pointer;
-      transition: all 0.15s ease;
+      transition: all 0.18s ease;
+      backdrop-filter: blur(8px);
+      user-select: none;
     }
-    .filter-btn:hover {
-      border-color: #111827;
+
+    .filter-label:hover {
+      color: var(--text);
+      border-color: rgba(255, 255, 255, 0.2);
     }
-    .filter-btn.active {
-      background: #111827;
-      color: #fff;
-      border-color: #111827;
+
+    #filter-all:checked ~ .section-header label[for="filter-all"],
+    #filter-realestate:checked ~ .section-header label[for="filter-realestate"],
+    #filter-ecommerce:checked ~ .section-header label[for="filter-ecommerce"],
+    #filter-corporate:checked ~ .section-header label[for="filter-corporate"],
+    #filter-hospitality:checked ~ .section-header label[for="filter-hospitality"] {
+      background: rgba(99, 102, 241, 0.16);
+      color: #c7d2fe;
+      border-color: rgba(99, 102, 241, 0.5);
+      box-shadow: 0 0 20px var(--accent-glow);
     }
+
+    #filter-realestate:checked ~ .grid .card:not([data-cat="realestate"]),
+    #filter-ecommerce:checked ~ .grid .card:not([data-cat="ecommerce"]),
+    #filter-corporate:checked ~ .grid .card:not([data-cat="corporate"]),
+    #filter-hospitality:checked ~ .grid .card:not([data-cat="hospitality"]) {
+      display: none;
+    }
+
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 20px;
     }
+
     .card {
-      background: #fff;
-      border: 1px solid #e5e7eb;
-      border-radius: 14px;
-      padding: 24px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 26px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      backdrop-filter: blur(12px);
+      transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
     }
+
     .card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
+      transform: translateY(-4px);
+      border-color: var(--border-hover);
+      box-shadow: 0 18px 36px -12px rgba(0, 0, 0, 0.65), 0 0 24px var(--accent-glow);
     }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
     .category {
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 600;
-      color: #6b7280;
+      color: var(--accent);
       text-transform: uppercase;
-      letter-spacing: 0.04em;
-      margin-bottom: 8px;
+      letter-spacing: 0.06em;
     }
+
+    .index-num {
+      font-size: 12px;
+      font-family: monospace;
+      color: #52525b;
+    }
+
     .card h3 {
       font-size: 20px;
-      margin: 0 0 8px;
-      color: #111827;
+      font-weight: 600;
+      margin: 0 0 10px;
+      color: var(--text);
+      letter-spacing: -0.01em;
     }
+
     .card p {
       font-size: 14px;
-      color: #4b5563;
+      color: var(--text-muted);
       margin: 0 0 20px;
     }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 20px;
+    }
+
+    .tag {
+      font-size: 11px;
+      color: #d4d4d8;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 3px 9px;
+      border-radius: 6px;
+    }
+
     .card-link {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      font-size: 14px;
+      justify-content: space-between;
+      width: 100%;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
       font-weight: 600;
-      color: #2563eb;
+      color: #e4e4e7;
       text-decoration: none;
+      transition: color 0.15s ease;
     }
-    .card-link:hover {
-      text-decoration: underline;
+
+    .card:hover .card-link {
+      color: var(--accent);
     }
+
     footer {
-      margin-top: 64px;
-      padding-top: 24px;
-      border-top: 1px solid #e5e7eb;
+      margin-top: 72px;
+      padding-top: 28px;
+      border-top: 1px solid var(--border);
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
-      gap: 12px;
-      font-size: 14px;
-      color: #6b7280;
+      align-items: center;
+      gap: 16px;
+      font-size: 13px;
+      color: var(--text-muted);
     }
+
     footer a {
-      color: #111827;
-      font-weight: 500;
+      color: var(--text);
       text-decoration: none;
+      transition: color 0.15s ease;
+    }
+
+    footer a:hover {
+      color: var(--accent);
     }
   </style>
 </head>
 <body>
-  <div id="root"></div>
+  <div class="container">
+    <header>
+      <div class="status-pill">
+        <span class="status-dot"></span>
+        Available for Web Projects
+      </div>
+      <h1>Kristoff</h1>
+      <p class="subtitle">
+        <strong>Frontend & Web Developer</strong> — Crafting modern corporate platforms, real estate ecosystems, e-commerce storefronts, and hospitality experiences.
+      </p>
+      <div class="hero-actions">
+        <a class="btn-primary" href="mailto:you@example.com">Get in Touch ↗</a>
+        <a class="btn-secondary" href="https://linkedin.com" target="_blank" rel="noopener noreferrer">LinkedIn Profile</a>
+      </div>
+    </header>
 
-  <script type="text/babel">
-    const { useState } = React;
+    <main>
+      <input type="radio" name="category" id="filter-all" checked />
+      <input type="radio" name="category" id="filter-realestate" />
+      <input type="radio" name="category" id="filter-ecommerce" />
+      <input type="radio" name="category" id="filter-corporate" />
+      <input type="radio" name="category" id="filter-hospitality" />
 
-    // EDIT YOUR PROFILE DETAILS HERE
-    const PROFILE = {
-      name: "Your Name",
-      role: "Web Developer & Digital Specialist",
-      bio: "Building responsive corporate websites, real estate platforms, e-commerce storefronts, and hospitality experiences.",
-      email: "you@example.com",
-      linkedin: "https://linkedin.com"
-    };
-
-    // EDIT OR ADD YOUR WORKS HERE
-    const WORKS = [
-      {
-        title: "AboitizLand",
-        category: "Real Estate",
-        description: "Corporate and residential property showcase for a leading Philippine real estate developer.",
-        url: "https://aboitizland.com/"
-      },
-      {
-        title: "Suntrust Properties",
-        category: "Real Estate",
-        description: "Nationwide house-and-lot and condominium property catalog with buyer portals and quote inquiries.",
-        url: "https://suntrust.com.ph/"
-      },
-      {
-        title: "Megaworld Corporation",
-        category: "Real Estate",
-        description: "Enterprise corporate site highlighting townships, residences, lifestyle malls, and investor relations.",
-        url: "https://www.megaworldcorp.com/"
-      },
-      {
-        title: "Brikk Home Solutions",
-        category: "E-Commerce",
-        description: "Online home appliance storefront featuring product collections, catalog filtering, and checkout integration.",
-        url: "https://brikkglobal.com/"
-      },
-      {
-        title: "White Horse Ceramic",
-        category: "Corporate & Retail",
-        description: "Architectural tile catalog and lookbook platform for residential and commercial spaces.",
-        url: "https://whitehorse.ph/"
-      },
-      {
-        title: "InLife Benefits",
-        category: "Corporate & Finance",
-        description: "Employee healthcare and insurance platform connecting members, HR teams, and digital portals.",
-        url: "https://www.inlifebenefits.com.ph/"
-      },
-      {
-        title: "Kaimana Siargao",
-        category: "Hospitality",
-        description: "Boutique island resort website showcasing villas, wellness amenities, dining, and local Siargao experiences.",
-        url: "https://kaimanasiargao.ph/"
-      }
-    ];
-
-    function PortfolioApp() {
-      const [selectedCategory, setSelectedCategory] = useState("All");
-
-      const categories = ["All", ...new Set(WORKS.map((work) => work.category))];
-      const filteredWorks =
-        selectedCategory === "All"
-          ? WORKS
-          : WORKS.filter((work) => work.category === selectedCategory);
-
-      return (
-        <div className="container">
-          <header>
-            <span className="badge">ReactJS Portfolio</span>
-            <h1>{PROFILE.name}</h1>
-            <p className="subtitle">
-              <strong>{PROFILE.role}</strong> — {PROFILE.bio}
-            </p>
-          </header>
-
-          <main>
-            <div className="filters">
-              {categories.map((category) => (
-                <button
-                  key={category}
-                  className={`filter-btn ${selectedCategory === category ? "active" : ""}`}
-                  onClick={() => setSelectedCategory(category)}
-                >
-                  {category}
-                </button>
-              ))}
-            </div>
-
-            <div className="grid">
-              {filteredWorks.map((work) => (
-                <article key={work.title} className="card">
-                  <div>
-                    <div className="category">{work.category}</div>
-                    <h3>{work.title}</h3>
-                    <p>{work.description}</p>
-                  </div>
-                  <a
-                    className="card-link"
-                    href={work.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Visit Live Site ↗
-                  </a>
-                </article>
-              ))}
-            </div>
-          </main>
-
-          <footer>
-            <span>© {new Date().getFullYear()} {PROFILE.name}</span>
-            <div>
-              <a href={`mailto:${PROFILE.email}`}>{PROFILE.email}</a>
-              {" • "}
-              <a href={PROFILE.linkedin} target="_blank" rel="noopener noreferrer">
-                LinkedIn
-              </a>
-            </div>
-          </footer>
+      <div class="section-header">
+        <h2 class="section-title">Selected Works</h2>
+        <div class="filters">
+          <label class="filter-label" for="filter-all">All (7)</label>
+          <label class="filter-label" for="filter-realestate">Real Estate</label>
+          <label class="filter-label" for="filter-ecommerce">E-Commerce</label>
+          <label class="filter-label" for="filter-corporate">Corporate</label>
+          <label class="filter-label" for="filter-hospitality">Hospitality</label>
         </div>
-      );
-    }
+      </div>
 
-    const root = ReactDOM.createRoot(document.getElementById("root"));
-    root.render(<PortfolioApp />);
-  </script>
+      <div class="grid">
+        <article class="card" data-cat="realestate">
+          <div>
+            <div class="card-top">
+              <span class="category">Real Estate</span>
+              <span class="index-num">01</span>
+            </div>
+            <h3>AboitizLand</h3>
+            <p>Corporate and residential property showcase for a leading Philippine real estate developer.</p>
+            <div class="tags">
+              <span class="tag">Corporate Web</span>
+              <span class="tag">Property Catalog</span>
+              <span class="tag">Responsive UI</span>
+            </div>
+          </div>
+          <a class="card-link" href="https://aboitizland.com/" target="_blank" rel="noopener noreferrer">
+            <span>Visit Live Project</span>
+            <span>↗</span>
+          </a>
+        </article>
+
+        <article class="card" data-cat="realestate">
+          <div>
+            <div class="card-top">
+              <span class="category">Real Estate</span>
+              <span class="index-num">02</span>
+            </div>
+            <h3>Suntrust Properties</h3>
+            <p>Nationwide house-and-lot and condominium property catalog with buyer portals and quote inquiries.</p>
+            <div class="tags">
+              <span class="tag">Real Estate</span>
+              <span class="tag">Lead Generation</span>
+              <span class="tag">Interactive Search</span>
+            </div>
+          </div>
+          <a class="card-link" href="https://suntrust.com.ph/" target="_blank" rel="noopener noreferrer">
+            <span>Visit Live Project</span>
+            <span>↗</span>
+          </a>
+        </article>
+
+        <article class="card" data-cat="realestate">
+          <div>
+            <div class="card-top">
+              <span class="category">Real Estate</span>
+              <span class="index-num">03</span>
+            </div>
+            <h3>Megaworld Corporation</h3>
+            <p>Enterprise corporate site highlighting townships, residences, lifestyle malls, and investor relations.</p>
+            <div class="tags">
+              <span class="tag">Enterprise</span>
+              <span class="tag">Townships</span>
+              <span class="tag">Investor Portal</span>
+            </div>
+          </div>
+          <a class="card-link" href="https://www.megaworldcorp.com/" target="_blank" rel="noopener noreferrer">
+            <span>Visit Live Project</span>
+            <span>↗</span>
+          </a>
+        </article>
+
+        <article class="card" data-cat="ecommerce">
+          <div>
+            <div class="card-top">
+              <span class="category">E-Commerce</span>
+              <span class="index-num">04</span>
+            </div>
+            <h3>Brikk Home Solutions</h3>
+            <p>Online home appliance storefront featuring product collections, catalog filtering, and checkout integration.</p>
+            <div class="tags">
+              <span class="tag">E-Commerce</span>
+              <span class="tag">Product Storefront</span>
+              <span class="tag">UI/UX</span>
+            </div>
+          </div>
+          <a class="card-link" href="https://brikkglobal.com/" target="_blank" rel="noopener noreferrer">
+            <span>Visit Live Project</span>
+            <span>↗</span>
+          </a>
+        </article>
+
+        <article class="card" data-cat="corporate">
+          <div>
+            <div class="card-top">
+              <span class="category">Corporate & Retail</span>
+              <span class="index-num">05</span>
+            </div>
+            <h3>White Horse Ceramic</h3>
+            <p>Architectural tile catalog and lookbook platform for residential and commercial spaces.</p>
+            <div class="tags">
+              <span class="tag">Product Catalog</span>
+              <span class="tag">Lookbook</span>
+              <span class="tag">B2B & Retail</span>
+            </div>
+          </div>
+          <a class="card-link" href="https://whitehorse.ph/" target="_blank" rel="noopener noreferrer">
+            <span>Visit Live Project</span>
+            <span>↗</span>
+          </a>
+        </article>
+
+        <article class="card" data-cat="corporate">
+          <div>
+            <div class="card-top">
+              <span class="category">Corporate & Finance</span>
+              <span class="index-num">06</span>
+            </div>
+            <h3>InLife Benefits</h3>
+            <p>Employee healthcare and insurance platform connecting members, HR teams, and digital portals.</p>
+            <div class="tags">
+              <span class="tag">Healthcare</span>
+              <span class="tag">Corporate Portal</span>
+              <span class="tag">Web Platform</span>
+            </div>
+          </div>
+          <a class="card-link" href="https://www.inlifebenefits.com.ph/" target="_blank" rel="noopener noreferrer">
+            <span>Visit Live Project</span>
+            <span>↗</span>
+          </a>
+        </article>
+
+        <article class="card" data-cat="hospitality">
+          <div>
+            <div class="card-top">
+              <span class="category">Hospitality</span>
+              <span class="index-num">07</span>
+            </div>
+            <h3>Kaimana Siargao</h3>
+            <p>Boutique island resort website showcasing villas, wellness amenities, dining, and local Siargao experiences.</p>
+            <div class="tags">
+              <span class="tag">Hospitality</span>
+              <span class="tag">Editorial Design</span>
+              <span class="tag">Booking Experience</span>
+            </div>
+          </div>
+          <a class="card-link" href="https://kaimanasiargao.ph/" target="_blank" rel="noopener noreferrer">
+            <span>Visit Live Project</span>
+            <span>↗</span>
+          </a>
+        </article>
+      </div>
+    </main>
+
+    <footer>
+      <span>© 2026 Kristoff. All rights reserved.</span>
+      <div>
+        <a href="mailto:you@example.com">you@example.com</a>
+        <span>  •  </span>
+        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      </div>
+    </footer>
+  </div>
 </body>
 </html>
