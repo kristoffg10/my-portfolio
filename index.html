@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio — Selected Works</title>
+  <!-- React 18 & Babel CDN (Zero build tools needed) -->
+  <script crossorigin src="https://unpkg.com"></script>
+  <script crossorigin src="https://unpkg.com"></script>
+  <script src="https://unpkg.com"></script>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #fafafa;
+      color: #111827;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 64px 24px;
+    }
+    header {
+      margin-bottom: 40px;
+    }
+    .badge {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #2563eb;
+      background: #eff6ff;
+      padding: 4px 10px;
+      border-radius: 999px;
+      margin-bottom: 12px;
+    }
+    h1 {
+      font-size: 36px;
+      margin: 0 0 10px;
+      letter-spacing: -0.02em;
+    }
+    .subtitle {
+      font-size: 17px;
+      color: #4b5563;
+      max-width: 620px;
+      margin: 0;
+    }
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 28px;
+    }
+    .filter-btn {
+      border: 1px solid #e5e7eb;
+      background: #fff;
+      color: #374151;
+      padding: 8px 16px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .filter-btn:hover {
+      border-color: #111827;
+    }
+    .filter-btn.active {
+      background: #111827;
+      color: #fff;
+      border-color: #111827;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
+    }
+    .category {
+      font-size: 12px;
+      font-weight: 600;
+      color: #6b7280;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 8px;
+    }
+    .card h3 {
+      font-size: 20px;
+      margin: 0 0 8px;
+      color: #111827;
+    }
+    .card p {
+      font-size: 14px;
+      color: #4b5563;
+      margin: 0 0 20px;
+    }
+    .card-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #2563eb;
+      text-decoration: none;
+    }
+    .card-link:hover {
+      text-decoration: underline;
+    }
+    footer {
+      margin-top: 64px;
+      padding-top: 24px;
+      border-top: 1px solid #e5e7eb;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 14px;
+      color: #6b7280;
+    }
+    footer a {
+      color: #111827;
+      font-weight: 500;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState } = React;
+
+    // EDIT YOUR PROFILE DETAILS HERE
+    const PROFILE = {
+      name: "Your Name",
+      role: "Web Developer & Digital Specialist",
+      bio: "Building responsive corporate websites, real estate platforms, e-commerce storefronts, and hospitality experiences.",
+      email: "you@example.com",
+      linkedin: "https://linkedin.com"
+    };
+
+    // EDIT OR ADD YOUR WORKS HERE
+    const WORKS = [
+      {
+        title: "AboitizLand",
+        category: "Real Estate",
+        description: "Corporate and residential property showcase for a leading Philippine real estate developer.",
+        url: "https://aboitizland.com/"
+      },
+      {
+        title: "Suntrust Properties",
+        category: "Real Estate",
+        description: "Nationwide house-and-lot and condominium property catalog with buyer portals and quote inquiries.",
+        url: "https://suntrust.com.ph/"
+      },
+      {
+        title: "Megaworld Corporation",
+        category: "Real Estate",
+        description: "Enterprise corporate site highlighting townships, residences, lifestyle malls, and investor relations.",
+        url: "https://www.megaworldcorp.com/"
+      },
+      {
+        title: "Brikk Home Solutions",
+        category: "E-Commerce",
+        description: "Online home appliance storefront featuring product collections, catalog filtering, and checkout integration.",
+        url: "https://brikkglobal.com/"
+      },
+      {
+        title: "White Horse Ceramic",
+        category: "Corporate & Retail",
+        description: "Architectural tile catalog and lookbook platform for residential and commercial spaces.",
+        url: "https://whitehorse.ph/"
+      },
+      {
+        title: "InLife Benefits",
+        category: "Corporate & Finance",
+        description: "Employee healthcare and insurance platform connecting members, HR teams, and digital portals.",
+        url: "https://www.inlifebenefits.com.ph/"
+      },
+      {
+        title: "Kaimana Siargao",
+        category: "Hospitality",
+        description: "Boutique island resort website showcasing villas, wellness amenities, dining, and local Siargao experiences.",
+        url: "https://kaimanasiargao.ph/"
+      }
+    ];
+
+    function PortfolioApp() {
+      const [selectedCategory, setSelectedCategory] = useState("All");
+
+      const categories = ["All", ...new Set(WORKS.map((work) => work.category))];
+      const filteredWorks =
+        selectedCategory === "All"
+          ? WORKS
+          : WORKS.filter((work) => work.category === selectedCategory);
+
+      return (
+        <div className="container">
+          <header>
+            <span className="badge">ReactJS Portfolio</span>
+            <h1>{PROFILE.name}</h1>
+            <p className="subtitle">
+              <strong>{PROFILE.role}</strong> — {PROFILE.bio}
+            </p>
+          </header>
+
+          <main>
+            <div className="filters">
+              {categories.map((category) => (
+                <button
+                  key={category}
+                  className={`filter-btn ${selectedCategory === category ? "active" : ""}`}
+                  onClick={() => setSelectedCategory(category)}
+                >
+                  {category}
+                </button>
+              ))}
+            </div>
+
+            <div className="grid">
+              {filteredWorks.map((work) => (
+                <article key={work.title} className="card">
+                  <div>
+                    <div className="category">{work.category}</div>
+                    <h3>{work.title}</h3>
+                    <p>{work.description}</p>
+                  </div>
+                  <a
+                    className="card-link"
+                    href={work.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Visit Live Site ↗
+                  </a>
+                </article>
+              ))}
+            </div>
+          </main>
+
+          <footer>
+            <span>© {new Date().getFullYear()} {PROFILE.name}</span>
+            <div>
+              <a href={`mailto:${PROFILE.email}`}>{PROFILE.email}</a>
+              {" • "}
+              <a href={PROFILE.linkedin} target="_blank" rel="noopener noreferrer">
+                LinkedIn
+              </a>
+            </div>
+          </footer>
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+    root.render(<PortfolioApp />);
+  </script>
+</body>
+</html>
